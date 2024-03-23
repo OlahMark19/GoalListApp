@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, TextInput, Button, StyleSheet, Modal, Image } from 'react-native'; 
+import { View, TextInput, Button, StyleSheet, Modal, Alert, Image } from 'react-native'; 
 
 function GoalInput(props) {
     const [enteredGoalText, setEnteredGoalText] = useState('');
@@ -9,8 +9,14 @@ function GoalInput(props) {
     }
 
     function addGoalHandler(){
-        props.onAddGoal(enteredGoalText);
-        setEnteredGoalText('');
+        if (enteredGoalText.trim() === '') {    
+          Alert.alert('Error', 'Please enter a valid name.');
+          return;
+        } 
+        else{
+          props.onAddGoal(enteredGoalText);
+          setEnteredGoalText('');
+        }       
     }
 
     return(

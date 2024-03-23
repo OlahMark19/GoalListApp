@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {   StyleSheet,   View,   FlatList, Button } from 'react-native';
+import {   StyleSheet,   View,   FlatList, Button, Alert } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
   import GoalItem from './components/GoalItem';
@@ -24,6 +24,16 @@ export default function App(){
       ]);
       endAddGoalHandler();
   }
+  function renameGoalHandler (id, newTitle) {
+    setCourseGoals(currentCourseGoals => {
+      return currentCourseGoals.map(goal => {
+        if (goal.id === id) {
+          return { ...goal, text: newTitle };
+        }
+        return goal;
+      })
+    });
+  };
 
   function deleteGoalHandler(id){
     setCourseGoals(currentCourseGoals => {
@@ -43,7 +53,11 @@ export default function App(){
       />    
       <View style={styles.goalsContainer}>
         <FlatList data={courseGoals} renderItem={(itemData) => {
-          return <GoalItem text={itemData.item.text} id={itemData.item.id} onDeleteItem={deleteGoalHandler}/>; 
+          return <GoalItem
+            text={itemData.item.text} 
+            id={itemData.item.id} 
+            onDeleteItem={deleteGoalHandler}
+            onRenameItem={renameGoalHandler}/>; 
         }}
          keyExtractor={(item, index) => {
           return item.id;
