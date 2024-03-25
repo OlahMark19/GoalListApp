@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState } from 'react';
 import { StyleSheet, View, Text, Pressable, Modal, Alert, TextInput, Button } from 'react-native';
 
 
@@ -32,8 +32,7 @@ function GoalItem(props){
       props.onRenameItem(props.id, newTitle)
       setNewTitle('');
       closeModal2();
-    }
-    
+    }  
   }
 
   return(
@@ -53,26 +52,32 @@ function GoalItem(props){
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-          <Pressable style={styles.modalText} onPress={openModal2}>
+          <Pressable style={styles.modalText} 
+          onPress={openModal2} 
+          android_ripple={{ color: '#210644' }}>
             <Text style={styles.textMod}>Rename</Text>
           </Pressable>
-          <Pressable style={styles.modalText} onPress={props.onDeleteItem.bind(this, props.id)}>
+          <Pressable style={styles.modalText} 
+          onPress={props.onDeleteItem.bind(this, props.id)} 
+          android_ripple={{ color: '#210644' }}>
             <Text style={styles.textMod}>Delete</Text>
           </Pressable>
           <Pressable style={[styles.buttonClose]}
-            onPress={closeModal}>
+            onPress={closeModal}
+            android_ripple={{ color: '#b50e61' }}>
             <Text style={styles.closeBtn}>Close</Text>
           </Pressable>
         </View>
       </View>
     </Modal>
     <Modal
+      keyboardShouldPersistTaps='handled'
       animationType='slide'
       transparent={true}
       visible={modal2Visible}
       onRequestClose={() => {closeModal2}}
     >
-      <View style={styles.modal2Center}>
+      <View style={styles.modal2Center} >
         <View style={styles.modal2View}>
         <TextInput 
            style={styles.textInput2}
@@ -85,7 +90,7 @@ function GoalItem(props){
             <Button title="Rename" onPress={handleRename} color="#5e0acc"/>
           </View>
           <View style={styles.btn}>
-            <Button title="Cancel" onPress={closeModal2} color="#f31282"/>
+            <Button title="Cancel" onPress={() => {closeModal2(); setModalToVisible(true);}} color="#f31282"/>
           </View>
         </View>
         </View>

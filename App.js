@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import {   StyleSheet,   View,   FlatList, Button, Alert } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {   StyleSheet,   View,   FlatList, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
   import GoalItem from './components/GoalItem';
