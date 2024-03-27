@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Pressable, Modal, Alert, TextInput, Button } from 'react-native';
+import { Snackbar } from 'react-native-paper';
+
 
 
 function GoalItem(props){
   const[modalIsVisible, setModalToVisible] = useState(false);
   const[modal2Visible, setModal2Visible] = useState(false);
   const[newTitle, setNewTitle] = useState('');
+  const [snackbarVisible, setSnackbarVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+
 
   const handleLongPress = () => {
     setModalToVisible(true);
@@ -23,7 +28,7 @@ function GoalItem(props){
     setModal2Visible(false)
     setNewTitle('');
   };
-  const handleRename = () => {
+  const handleRename = (message) => {
     if (newTitle.trim() === '') {    
       Alert.alert('Error', 'Please enter a valid name.');
       return;
@@ -31,8 +36,15 @@ function GoalItem(props){
     else{
       props.onRenameItem(props.id, newTitle)
       setNewTitle('');
+      setSnackbarMessage(message);
+      setSnackbarVisible(true);
       closeModal2();
     }  
+  }
+  const handleDelete = (message) => {
+    props.onDeleteItem( props.id);
+    setSnackbarMessage(message);
+    setSnackbarVisible(true);
   }
 
   return(
@@ -58,7 +70,7 @@ function GoalItem(props){
             <Text style={styles.textMod}>Rename</Text>
           </Pressable>
           <Pressable style={styles.modalText} 
-          onPress={props.onDeleteItem.bind(this, props.id)} 
+          onPress={() => handleDelete('Goal deleted')} 
           android_ripple={{ color: '#210644' }}>
             <Text style={styles.textMod}>Delete</Text>
           </Pressable>
@@ -71,7 +83,6 @@ function GoalItem(props){
       </View>
     </Modal>
     <Modal
-      keyboardShouldPersistTaps='handled'
       animationType='slide'
       transparent={true}
       visible={modal2Visible}
@@ -87,7 +98,7 @@ function GoalItem(props){
         </TextInput>
         <View style={styles.modal2btns}>
           <View style={styles.btn}>
-            <Button title="Rename" onPress={handleRename} color="#5e0acc"/>
+            <Button title="Rename" onPress={() => handleRename('Goal renamed')} color="#5e0acc"/>
           </View>
           <View style={styles.btn}>
             <Button title="Cancel" onPress={() => {closeModal2(); setModalToVisible(true);}} color="#f31282"/>
@@ -96,6 +107,18 @@ function GoalItem(props){
         </View>
       </View>
     </Modal>
+    <Snackbar
+        visible={snackbarVisible}
+        onDismiss={() => setSnackbarVisible(false)}
+        duration={Snackbar.DURATION_SHORT}
+        action={{
+          label: 'Undo',
+          onPress: () => {
+            // Do something
+          },
+        }}>     
+        {snackbarMessage}
+      </Snackbar>
   </View>
 );
 
@@ -197,5 +220,6 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         width: 170,
         padding: 4,
-      }
+      },
+      
 });
