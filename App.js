@@ -1,7 +1,9 @@
+import * as React from 'react'; 
 import { useState } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {   StyleSheet,   View,   FlatList, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 
   import GoalItem from './components/GoalItem';
   import GoalInput from './components/GoalInput';
@@ -9,6 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 export default function App(){
   const [modalVisible, setModalVisible] = useState(false)
   const [courseGoals, setCourseGoals] = useState([]);
+
 
   function startAddGoalHandler(){
     setModalVisible(true);
@@ -38,11 +41,13 @@ export default function App(){
 
   function deleteGoalHandler(id){
     setCourseGoals(currentCourseGoals => {
-      return currentCourseGoals.filter((goal) => goal.id !== id);
+      return currentCourseGoals.filter((goal) => goal.id !== id);    
     });
+    
   }
   return(
-    <>
+   
+   <SafeAreaProvider>
     <StatusBar style='light'/>
     <View style={styles.appContainer}>
       <Button title='Add New Goal'
@@ -66,7 +71,8 @@ export default function App(){
          alwaysBounceVertical={false} />       
       </View>    
     </View>
-    </>
+    </SafeAreaProvider>
+    
     );
 }
   
