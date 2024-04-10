@@ -6,6 +6,6 @@
 * NodeJS LTS
 * npm install
 * npm install --global expo-cli
-#### 3. Install Expo Go on your device
+#### 3. Install Expo Go app on your phone device
 #### 4. Start the app
 * npm start and in Expo Go app scan your QR code from the terminal
