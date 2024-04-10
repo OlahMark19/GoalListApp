@@ -1,4 +1,4 @@
-How to test the application:
+### How to test the application:
 
 # Clone this repo or install the code
 git clone https://github.com/OlahMark19/ReactNative-goal-list-app 
