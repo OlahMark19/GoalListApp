@@ -88,7 +88,7 @@ export default function App(){
         onCancel={endAddGoalHandler}
       />    
       <View style={styles.goalsContainer}>
-        <FlatList data={courseGoals} renderItem={(itemData) => {
+        <FlatList keyboardShouldPersistTaps='handled' data={courseGoals} renderItem={(itemData) => {
           return <GoalItem
             text={itemData.item.text} 
             id={itemData.item.id} 
