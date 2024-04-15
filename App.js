@@ -58,8 +58,17 @@ export default function App(){
   }
 
   function handleUndo(){
-    if (snackbarDelVisible) {
-      setCourseGoals(currentCourseGoals => [...currentCourseGoals, deletedGoal]);
+    if (snackbarDelVisible && deletedGoal) {
+      setCourseGoals(currentCourseGoals => {
+      const insertionIndex = findInsertionIndex(deletedGoal);
+      
+      // Create a new array with the deletedGoal inserted at the correct position
+      return [
+        ...currentCourseGoals.slice(0, insertionIndex), // Items before the insertion index
+        deletedGoal, // Insert the deleted goal
+        ...currentCourseGoals.slice(insertionIndex) // Items after the insertion index
+      ];
+    });
     } else if (snackbarVisible) {
       setCourseGoals(currentCourseGoals => {
         const updatedGoals = currentCourseGoals.map(goal => {
@@ -73,6 +82,11 @@ export default function App(){
       });
       setRenamedGoals(prevRenamedGoals => prevRenamedGoals.filter(goal => goal.id !== deletedGoal.id));
     }
+  }
+  
+  function findInsertionIndex (deletedGoal){
+    const insertionIndex = courseGoals.findIndex(goal => goal.id > deletedGoal.id);
+    return insertionIndex !== -1 ? insertionIndex : courseGoals.length;
   }
 
   return(
