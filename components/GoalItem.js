@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { StyleSheet, View, Text, Pressable, Modal, Alert, TextInput, Button } from 'react-native';
 
-
 function GoalItem(props){
   const[modalIsVisible, setModalToVisible] = useState(false);
   const[modal2Visible, setModal2Visible] = useState(false);
   const[newTitle, setNewTitle] = useState('');
+
   
   const handleLongPress = () => {
     setModalToVisible(true);
