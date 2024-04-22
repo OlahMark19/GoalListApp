@@ -4,6 +4,7 @@ import {   StyleSheet,   View,   FlatList, Button } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Snackbar } from 'react-native-paper';
+import { SelectList } from 'react-native-dropdown-select-list'
 
 
   import GoalItem from './components/GoalItem';
@@ -16,6 +17,14 @@ export default function App(){
   const [snackbarDelVisible, setSnackbarDelVisible] = useState(false);
   const [deletedGoal, setDeletedGoal] = useState(null);
   const [renamedGoals, setRenamedGoals] = useState([]);
+  const [selected, setSelected] = useState("");
+
+  const data = [
+    {key:'1', value:'Older', },
+    {key:'2', value:'Latest'},
+    {key:'3', value:'A-Z'},
+    {key:'4', value:'Z-A',},
+  ]
 
 
   function startAddGoalHandler(){
@@ -100,7 +109,12 @@ export default function App(){
       <GoalInput visible={modalVisible} 
         onAddGoal={addGoalHandler} 
         onCancel={endAddGoalHandler}
-      />    
+      /> 
+      <SelectList boxStyles={{borderRadius:5, marginTop: 20}} 
+        setSelected={(val) => setSelected(val)} 
+        data={data} 
+        save="value"
+    />   
       <View style={styles.goalsContainer}>
         <FlatList keyboardShouldPersistTaps='handled' data={courseGoals} renderItem={(itemData) => {
           return <GoalItem
@@ -149,5 +163,4 @@ const styles = StyleSheet.create({
   goalsContainer:{
     flex:5
   },
-  
 })
